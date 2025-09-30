@@ -1,0 +1,24 @@
+{
+  //A Chrome extension manifest version. Must be 3.
+  "manifest_version": 3,
+  //The name of the extension, which is displayed in the Chrome Web Store and in the Extensions page.
+  "name": "fonetik",
+  //The version of the extension, which is displayed in the Chrome Web Store and in the Extensions page.
+  "version": "1.0.0",
+  //A brief description of the extension, which is displayed in the Chrome Web Store and in the Extensions page.
+  "description": "Changes words to be more Phonetic",
+  //The permissions that the extension needs to function properly.
+  "permissions": [
+    "storage",
+    "tabs",
+    "activeTab",
+    "scripting"
+  ],
+  //The content scripts that are injected into web pages.
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["scripts/content.js"]
+    }
+  ]
+}
