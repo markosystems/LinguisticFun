@@ -12,17 +12,25 @@ namespace LinguisticFun
     {
         public static List<Rule> Rules { get; } = new List<Rule>();
 
+        public static void ActiveRule(string ruleName)
+        {
+            if(Phonetic.DoesRuleExist(ruleName))
+            {
+                Rules.Add(Phonetic.GetRule(ruleName));
+            }
+            if (Neologetic.DoesRuleExist(ruleName))
+            {
+                Rules.Add(Neologetic.GetRule(ruleName));
+            }
+        }
+
         public static string Translate(string input)
         {
-            var words = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            for (int i = 0; i < words.Length; i++)
+            foreach(var rule in Rules)
             {
-                foreach (var rule in Rules)
-                {
-                    words[i] = rule(words[i]);
-                }
+                input = rule(input);
             }
-            return string.Join(' ', words);
+            return input;
         }
     }
 

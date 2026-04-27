@@ -12,44 +12,72 @@ namespace LinguisticFun
     public static class Phonetic
     {
         public static HomophoneRules homophoneRules { get; } = new HomophoneRules();
+
+        public static string[] RuleNames=> new string[]
+        {
+            "NoSilentLetters",
+            "SimplifyConsonants",
+            "NoHomophones",
+            "JustUseF",
+            "WhatIsOU",
+            "JustUseDoubleE",
+            "XisAUselessLetter",
+            "JustUseSh",
+            "TH_IsntReal",
+            "C_IsntReal",
+            "Y_isNotAVowel",
+            "Just_Use_J"
+        };
+
+        public static bool DoesRuleExist(string ruleName)
+        {
+            foreach (var name in RuleNames)
+            {
+                if (string.Equals(name, ruleName, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         static string vowels = "aeiouy";
         /// <summary>
         /// Removes common silent letters from English words.
         /// </summary>
         public static string NoSilentLetters(string input)
         {
-            
-            if(string.IsNullOrEmpty(input))
+
+            if (string.IsNullOrEmpty(input))
             {
                 return input;
             }
-            if(input.Length < 2)
+            if (input.Length < 2)
             {
                 return input;
             }
-            if(input.Contains("kn", StringComparison.OrdinalIgnoreCase))
+            if (input.Contains("kn", StringComparison.OrdinalIgnoreCase))
             {
                 input = input.Replace("kn", "n", StringComparison.OrdinalIgnoreCase);
             }
-            if(input.Contains("gn", StringComparison.OrdinalIgnoreCase))
+            if (input.Contains("gn", StringComparison.OrdinalIgnoreCase))
             {
                 input = input.Replace("gn", "n", StringComparison.OrdinalIgnoreCase);
             }
-            if(input.Contains("pn", StringComparison.OrdinalIgnoreCase))
+            if (input.Contains("pn", StringComparison.OrdinalIgnoreCase))
             {
                 input = input.Replace("pn", "n", StringComparison.OrdinalIgnoreCase);
             }
-            if(input.Contains("ae", StringComparison.OrdinalIgnoreCase))
+            if (input.Contains("ae", StringComparison.OrdinalIgnoreCase))
             {
                 input = input.Replace("ae", "e", StringComparison.OrdinalIgnoreCase);
             }
-            if(input.Contains("wr", StringComparison.OrdinalIgnoreCase))
+            if (input.Contains("wr", StringComparison.OrdinalIgnoreCase))
             {
                 input = input.Replace("wr", "r", StringComparison.OrdinalIgnoreCase);
             }
-            if(input.Contains("wh", StringComparison.OrdinalIgnoreCase))
+            if (input.Contains("wh", StringComparison.OrdinalIgnoreCase))
             {
-                if(input.Contains("who", StringComparison.OrdinalIgnoreCase))
+                if (input.Contains("who", StringComparison.OrdinalIgnoreCase))
                 {
                     input = input.Replace("who", "hoo", StringComparison.OrdinalIgnoreCase);
                 }
@@ -58,7 +86,7 @@ namespace LinguisticFun
                     input = input.Replace("wh", "w", StringComparison.OrdinalIgnoreCase);
                 }
             }
-            if(input.EndsWith("mb", StringComparison.OrdinalIgnoreCase))
+            if (input.EndsWith("mb", StringComparison.OrdinalIgnoreCase))
             {
                 input = input.Substring(0, input.Length - 1);
             }
@@ -73,19 +101,19 @@ namespace LinguisticFun
             /// <summary>
             /// Simplifies consonant clusters in English words.
             /// 
-            if(string.IsNullOrEmpty(input))
+            if (string.IsNullOrEmpty(input))
             {
                 return input;
             }
-            if(input.Length < 2)
+            if (input.Length < 2)
             {
                 return input;
             }
             var sb = new StringBuilder();
             sb.Append(input[0]);
-            for(int i = 1; i < input.Length; i++)
+            for (int i = 1; i < input.Length; i++)
             {
-                if(char.ToLower(input[i]) == char.ToLower(input[i - 1]) &&
+                if (char.ToLower(input[i]) == char.ToLower(input[i - 1]) &&
                    "bcdfghjklmnpqrstvwxyz".Contains(char.ToLower(input[i])))
                 {
                     continue;
@@ -112,11 +140,11 @@ namespace LinguisticFun
         /// </summary>
         public static string JustUseF(string input)
         {
-            if(string.IsNullOrEmpty(input))
+            if (string.IsNullOrEmpty(input))
             {
                 return input;
             }
-            if(input.Length < 2)
+            if (input.Length < 2)
             {
                 return input;
             }
@@ -148,15 +176,15 @@ namespace LinguisticFun
         /// </summary>
         public static string WhatIsOU(string input)
         {
-            if(string.IsNullOrEmpty(input))
+            if (string.IsNullOrEmpty(input))
             {
                 return input;
             }
-            if(input.Length < 2)
+            if (input.Length < 2)
             {
                 return input;
             }
-           
+
             input = input.Replace("ou", "ow", StringComparison.OrdinalIgnoreCase);
             return input;
         }
@@ -165,15 +193,15 @@ namespace LinguisticFun
         /// </summary>
         public static string JustUseDoubleE(string input)
         {
-            if(string.IsNullOrEmpty(input))
+            if (string.IsNullOrEmpty(input))
             {
                 return input;
             }
-            if(input.Length < 2)
+            if (input.Length < 2)
             {
                 return input;
             }
-           
+
             input = input.Replace("ea", "ee", StringComparison.OrdinalIgnoreCase);
             if (!input.Contains("pie", StringComparison.OrdinalIgnoreCase) && !input.Contains("cei", StringComparison.OrdinalIgnoreCase) && !input.EndsWith("s", StringComparison.OrdinalIgnoreCase))
             {
@@ -187,11 +215,11 @@ namespace LinguisticFun
         /// </summary>
         public static string XisAUselessLetter(string input)
         {
-            if(string.IsNullOrEmpty(input))
+            if (string.IsNullOrEmpty(input))
             {
                 return input;
             }
-            if(input.Length < 2)
+            if (input.Length < 2)
             {
                 return input;
             }
@@ -211,11 +239,11 @@ namespace LinguisticFun
         /// </summary>
         public static string JustUseSh(string input)
         {
-            if(string.IsNullOrEmpty(input))
+            if (string.IsNullOrEmpty(input))
             {
                 return input;
             }
-            if(input.Length < 2)
+            if (input.Length < 2)
             {
                 return input;
             }
@@ -256,15 +284,15 @@ namespace LinguisticFun
         /// </summary>
         public static string TH_IsntReal(string input)
         {
-            if(string.IsNullOrEmpty(input))
+            if (string.IsNullOrEmpty(input))
             {
                 return input;
             }
-            if(input.Length < 2)
+            if (input.Length < 2)
             {
                 return input;
             }
-           
+
             input = input.Replace("th", "d", StringComparison.OrdinalIgnoreCase);
             return input;
         }
@@ -278,13 +306,13 @@ namespace LinguisticFun
             {
                 return input;
             }
-            if(input.Contains("ce", StringComparison.OrdinalIgnoreCase) || input.Contains("ci", StringComparison.OrdinalIgnoreCase) || input.Contains("cy", StringComparison.OrdinalIgnoreCase))
+            if (input.Contains("ce", StringComparison.OrdinalIgnoreCase) || input.Contains("ci", StringComparison.OrdinalIgnoreCase) || input.Contains("cy", StringComparison.OrdinalIgnoreCase))
             {
                 input = input.Replace("ce", "se", StringComparison.OrdinalIgnoreCase);
                 input = input.Replace("ci", "si", StringComparison.OrdinalIgnoreCase);
                 input = input.Replace("cy", "sy", StringComparison.OrdinalIgnoreCase);
             }
-            else if(input.Contains("ch", StringComparison.OrdinalIgnoreCase))
+            else if (input.Contains("ch", StringComparison.OrdinalIgnoreCase))
             {
                 // words like "chord" and "chorus" should keep the "k" sound
                 if (input.Contains("chor", StringComparison.OrdinalIgnoreCase) || input.Contains("char", StringComparison.OrdinalIgnoreCase) || input.Contains("chem", StringComparison.OrdinalIgnoreCase) || input.Contains("chord", StringComparison.OrdinalIgnoreCase))
@@ -320,12 +348,32 @@ namespace LinguisticFun
             {
                 return input;
             }
-            if(input.EndsWith("y", StringComparison.OrdinalIgnoreCase))
+            if (input.EndsWith("y", StringComparison.OrdinalIgnoreCase))
             {
                 input = input.Replace("y", "ii", StringComparison.OrdinalIgnoreCase);
             }
             return input;
         }
+        public static string Just_Use_J(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                return input;
+
+            }
+            if (input.Length < 2)
+            {
+                return input;
+            }
+            if (input.EndsWith("ge", StringComparison.OrdinalIgnoreCase))
+            {
+                input.Replace("ge", "j", StringComparison.OrdinalIgnoreCase);
+            }
+
+            return input;
+        }
+
+        public static string Pro_Capitalism(string input) => input.ToUpper();
 
         /// <summary>
         /// Translates a single word by applying a series of phonetic transformation rules.
@@ -334,7 +382,7 @@ namespace LinguisticFun
         /// <returns></returns>
         public static string TranslateSingleWord(string input)
         {
-            if(string.IsNullOrEmpty(input))
+            if (string.IsNullOrEmpty(input))
             {
                 return input;
             }
@@ -344,10 +392,11 @@ namespace LinguisticFun
             word = TH_IsntReal(word);
             word = JustUseF(word);
             word = WhatIsOU(word);
-            //word = C_IsntReal(word);
+            word = C_IsntReal(word);
             word = JustUseDoubleE(word);
             word = XisAUselessLetter(word);
             word = JustUseSh(word);
+            word = Just_Use_J(word);
             word = Y_isNotAVowel(word);
             word = SimplifyConsonants(word);
             return word;
@@ -366,56 +415,110 @@ namespace LinguisticFun
                 try
                 {
                     words[i] = TranslateSingleWord(words[i]);
-                }catch(Exception ex)
+                }
+                catch (Exception ex)
                 {
                     Console.WriteLine($"Error translating word '{words[i]}': {ex.Message}");
                 }
             }
             return string.Join(' ', words);
         }
-    }
-
-    public class Homophone
-    {
-        public string[] Variants { get; set; }
-        public string DomananttVariant { get; set; }
-        public Homophone(string[] variants)
+        public static string No_More_Homonyms(string input)
         {
-            Variants = variants;
-            DomananttVariant = null;
+            return HomographsReader.Read(input, Homographs);
         }
 
-        public string GetDominantVariant(string input)
+        public static Rule GetRule(string ruleName)
         {
-            if(!string.IsNullOrEmpty(DomananttVariant))
+            switch (ruleName.ToLower())
             {
-                return DomananttVariant;
+                case "nosilentletters":
+                    return NoSilentLetters;
+                case "simplifyconsonants":
+                    return SimplifyConsonants;
+                case "nohomophones":
+                    return NoHomophones;
+                case "justusef":
+                    return JustUseF;
+                case "whatisou":
+                    return WhatIsOU;
+                case "justusedoublee":
+                    return JustUseDoubleE;
+                case "xisausefulletter":
+                    return XisAUselessLetter;
+                case "justusesh":
+                    return JustUseSh;
+                case "thisntreal":
+                    return TH_IsntReal;
+                case "cisntreal":
+                    return C_IsntReal;
+                case "yisnotavowel":
+                    return Y_isNotAVowel;
+                case "justusej":
+                    return Just_Use_J;
+                default:
+                    throw new ArgumentException($"Rule '{ruleName}' not found.");
             }
-            return input;
         }
-
-        public bool Contains(string word)
+        static Homograph[] Homographs = new Homograph[]
         {
-            foreach(var variant in Variants)
+            new Homograph(
+                "lead",
+                new WordVariant(
+                    "lead",
+                    "verb",
+                    @"\blead\b.*\b(go|walk|run|follow|way)\b"
+                ),
+                new WordVariant(
+                    "led",
+                    "metal",
+                    @"\blead\b.*\b(pipe|metal|heavy)\b"
+                )
+            )
+        };
+
+    }
+    public class Homophone
+        {
+            public string[] Variants { get; set; }
+            public string DomananttVariant { get; set; }
+            public Homophone(string[] variants)
             {
-                if(string.Equals(variant, word, StringComparison.OrdinalIgnoreCase))
+                Variants = variants;
+                DomananttVariant = null;
+            }
+
+            public string GetDominantVariant(string input)
+            {
+                if (!string.IsNullOrEmpty(DomananttVariant))
                 {
-                    return true;
+                    return DomananttVariant;
+                }
+                return input;
+            }
+
+            public bool Contains(string word)
+            {
+                foreach (var variant in Variants)
+                {
+                    if (string.Equals(variant, word, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            public void SetDominantVariant(string dominant)
+            {
+                DomananttVariant = dominant;
+            }
+            public void SetFirstAsDominant()
+            {
+                if (Variants.Length > 0)
+                {
+                    DomananttVariant = Variants[0];
                 }
             }
-            return false;
         }
-
-        public void SetDominantVariant(string dominant)
-        {
-            DomananttVariant = dominant;
-        }
-        public void SetFirstAsDominant()
-        {
-            if(Variants.Length > 0)
-            {
-                DomananttVariant = Variants[0];
-            }
-        }
-    }
 }

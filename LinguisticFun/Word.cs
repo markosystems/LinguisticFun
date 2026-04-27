@@ -7,7 +7,7 @@ namespace LinguisticFun
     /// <summary>
     /// Represents an english word with properties and methods for linguistic manipulation.
     /// </summary>
-    public class Word
+    public class WordVariation
     {
         public string Text { get; set; }
         public int Length => Text.Length;
